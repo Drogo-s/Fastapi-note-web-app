@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Notes</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="panel">
+        <h2>My Notes</h2>
+
+        {% if error %}
+          <p style="color: red;">{{ error }}</p>
+        {% endif %}
+
+        <form method="post" action="/notes">
+            <input type="text" name="title" placeholder="Note Title" required>
+            <textarea name="content" placeholder="Note content"></textarea>
+            <button type="submit" class="btn-primary">Add Note</button>
+        </form>
+
+        <h3 style="margin-top: 30px;">All Notes</h3>
+        <ul>
+            {% for note in notes %}
+            <li>
+                <span><strong>{{ note.title }}</strong> - {{ note.content }}</span>
+                <form method="post" action="/notes/delete" style="display: inline;">
+                    <input type="hidden" name="note_id" value="{{ note.id }}">
+                    <button type="submit" class="btn-delete">Delete</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <p style="text-align: center; margin-top: 20px;">
+            <a href="/logout"><button class="btn-logout">Logout</button></a>
+        </p>
+    </div>
+</body>
+</html>

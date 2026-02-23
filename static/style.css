@@ -1,0 +1,351 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ─── Reset ─────────────────────────────────────────────── */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ─── Body & Background ──────────────────────────────────── */
+body {
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    animation: bgShift 10s ease infinite alternate;
+}
+
+@keyframes bgShift {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+/* Floating orbs in background */
+body::before,
+body::after {
+    content: '';
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+    pointer-events: none;
+    animation: float 8s ease-in-out infinite;
+    z-index: 0;
+}
+
+body::before {
+    width: 400px;
+    height: 400px;
+    background: #e2b96f;
+    top: -100px;
+    left: -100px;
+}
+
+body::after {
+    width: 300px;
+    height: 300px;
+    background: #c0392b;
+    bottom: -80px;
+    right: -80px;
+    animation-delay: -4s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    50%       { transform: translateY(30px) scale(1.05); }
+}
+
+/* ─── Panel Card ─────────────────────────────────────────── */
+.panel {
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.97);
+    border-radius: 20px;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(255,255,255,0.08);
+    padding: 44px 40px;
+    width: 100%;
+    max-width: 480px;
+    animation: slideUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+    backdrop-filter: blur(12px);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Gold top accent bar */
+.panel::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #c0392b, #e2b96f, #c0392b);
+    border-radius: 20px 20px 0 0;
+    background-size: 200%;
+    animation: shimmer 3s linear infinite;
+}
+
+@keyframes shimmer {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}
+
+/* ─── Headings ───────────────────────────────────────────── */
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    text-align: center;
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+    animation: fadeIn 0.6s ease 0.2s both;
+}
+
+h2 {
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    text-align: center;
+    margin-bottom: 28px;
+    letter-spacing: -0.3px;
+    animation: fadeIn 0.6s ease 0.2s both;
+}
+
+h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #0f3460;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Forms ──────────────────────────────────────────────── */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 13px 16px;
+    border: 1.5px solid #d1d9e6;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: #1a1a2e;
+    background-color: #f8f9fc;
+    transition: border-color 0.25s, box-shadow 0.25s, background-color 0.25s, transform 0.2s;
+    outline: none;
+}
+
+input:focus,
+textarea:focus {
+    border-color: #c0392b;
+    box-shadow: 0 0 0 4px rgba(192, 57, 43, 0.12);
+    background-color: #fff;
+    transform: translateY(-1px);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* ─── Buttons ────────────────────────────────────────────── */
+button {
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    font-weight: 600;
+    padding: 12px 22px;
+    transition: background-color 0.22s, transform 0.15s, box-shadow 0.22s;
+    letter-spacing: 0.2px;
+}
+
+button:hover {
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: scale(0.97) translateY(0);
+}
+
+/* Register — deep crimson */
+.btn-register {
+    background: linear-gradient(135deg, #c0392b, #e74c3c);
+    color: #fff;
+    width: 100%;
+    box-shadow: 0 4px 14px rgba(192, 57, 43, 0.3);
+}
+
+.btn-register:hover {
+    background: linear-gradient(135deg, #a93226, #c0392b);
+    box-shadow: 0 6px 20px rgba(192, 57, 43, 0.45);
+}
+
+/* Login — classic navy */
+.btn-login {
+    background: linear-gradient(135deg, #0f3460, #16213e);
+    color: #fff;
+    width: 100%;
+    box-shadow: 0 4px 14px rgba(15, 52, 96, 0.3);
+}
+
+.btn-login:hover {
+    background: linear-gradient(135deg, #0a2540, #0f3460);
+    box-shadow: 0 6px 20px rgba(15, 52, 96, 0.45);
+}
+
+/* Primary (Add Note) — gold */
+.btn-primary {
+    background: linear-gradient(135deg, #d4a017, #e2b96f);
+    color: #1a1a2e;
+    width: 100%;
+    box-shadow: 0 4px 14px rgba(212, 160, 23, 0.3);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #b8860b, #d4a017);
+    box-shadow: 0 6px 20px rgba(212, 160, 23, 0.45);
+}
+
+/* Delete — muted red */
+.btn-delete {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: #fff;
+    padding: 7px 14px;
+    font-size: 0.82rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(192, 57, 43, 0.25);
+    flex-shrink: 0;
+}
+
+.btn-delete:hover {
+    background: linear-gradient(135deg, #c0392b, #a93226);
+    box-shadow: 0 4px 12px rgba(192, 57, 43, 0.4);
+}
+
+/* Logout — elegant slate */
+.btn-logout {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    color: #ecf0f1;
+    padding: 11px 28px;
+    box-shadow: 0 4px 12px rgba(44, 62, 80, 0.25);
+}
+
+.btn-logout:hover {
+    background: linear-gradient(135deg, #1a252f, #2c3e50);
+    box-shadow: 0 6px 18px rgba(44, 62, 80, 0.4);
+}
+
+/* ─── Notes List ─────────────────────────────────────────── */
+ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #f8f9fc, #ffffff);
+    border: 1.5px solid #e4e9f2;
+    border-left: 4px solid #c0392b;
+    border-radius: 10px;
+    padding: 13px 16px;
+    gap: 12px;
+    transition: transform 0.2s, box-shadow 0.2s, border-left-color 0.2s;
+    animation: fadeInItem 0.4s ease both;
+}
+
+ul li:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    border-left-color: #e2b96f;
+}
+
+@keyframes fadeInItem {
+    from { opacity: 0; transform: translateX(-12px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+ul li span {
+    font-size: 0.9rem;
+    color: #4a5568;
+    flex: 1;
+    line-height: 1.5;
+}
+
+ul li strong {
+    color: #1a1a2e;
+    display: block;
+    margin-bottom: 2px;
+}
+
+/* ─── Links ──────────────────────────────────────────────── */
+a {
+    color: #c0392b;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: #e2b96f;
+    text-decoration: underline;
+}
+
+/* ─── Paragraphs ─────────────────────────────────────────── */
+p {
+    color: #718096;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-top: 8px;
+}
+
+/* ─── Home Page Button Row ───────────────────────────────── */
+div[style*="display: flex"] {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+div[style*="display: flex"] .btn-register,
+div[style*="display: flex"] .btn-login {
+    width: auto;
+    padding: 12px 32px;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────── */
+ul::-webkit-scrollbar { width: 5px; }
+ul::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+ul::-webkit-scrollbar-thumb { background: #c0392b; border-radius: 10px; }

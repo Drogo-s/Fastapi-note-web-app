@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="panel">
+        <h2>Login</h2>
+        <form method="post">
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit" class="btn-register">Login</button>
+            {% if error %}
+            <p style="color: red;">{{ error }}</p>
+            {% endif %}
+        </form>
+        <p style="text-align: center; margin-top: 10px;">
+            Don't have an Account? <a href="/register">Register</a>
+        </p>
+        
+    </div>
+</body>
+</html>
