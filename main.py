@@ -1,16 +1,22 @@
 import os
-from fastapi import FastAPI, Request, Form, Depends, Response
+import tempfile
+from fastapi import FastAPI, Request, Form, Depends, Response, UploadFile, File
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from supabase import create_client, Client
 from dotenv import load_dotenv
 from itsdangerous import URLSafeSerializer
 from supabase_auth.errors import AuthApiError
+import whisper
 
 load_dotenv()
 app = FastAPI()
+
+# Load whisper model once at startup
+model = whisper.load_model("small")
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -127,3 +133,21 @@ def delete_note(note_id: str = Form(...), user_id: str = Depends(get_current_use
         return RedirectResponse("/login", status_code=302)
     supabase.table("notes").delete().eq("id", note_id).eq("user_id", user_id).execute()
     return RedirectResponse("/notes", status_code=302)
+
+
+@app.post("/transcribe")
+async def transcribe(file: UploadFile = File(...)):
+    try:
+        
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
+            contents = await file.read()
+            tmp.write(contents)
+            tmp_path = tmp.name
+
+        
+        result = model.transcribe(tmp_path, language="en")
+        os.unlink(tmp_path)  
+
+        return JSONResponse({"text": result["text"]})
+    except Exception as e:
+        return JSONResponse({"error": str(e)}, status_code=500)
